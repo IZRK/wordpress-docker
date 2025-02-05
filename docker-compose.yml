@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  db:
+    container_name: wpdb
+    image: mysql:latest
+    volumes:
+      - /home/hosting/mysql:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: 
+    ports:
+     - "3307:3306"
+
+  thewebsite:
+    container_name: website_folder_name
+    build: .
+    ports:
+      - "11111:80"
+    volumes:
+      - /home/hosting/website_folder_name/wp-content:/var/www/html/wp-content
+      - /home/hosting/website_folder_name/wp-config.php:/var/www/html/wp-config.php:ro
+    restart: always
+    depends_on:
+      - db
+
+networks:
+  default:
+    external: true
+    name: wordpress
