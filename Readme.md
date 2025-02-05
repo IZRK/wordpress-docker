@@ -20,6 +20,15 @@ server {
         listen 443 ssl;
 }
 ```
+- Update `wp-config.php` to include these lines below. `DB_HOST` is the mysql container from `docker-compose.yml`
+```
+$_SERVER['HTTPS'] = 'on';
+
+define('WP_HOME', 'https://website.si');
+define('WP_SITEURL', 'https://website.si');
+
+define('DB_HOST', 'db');
+```
 
 ### To nuke cache and force wordpress docker update:
 ```
